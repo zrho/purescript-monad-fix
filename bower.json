@@ -1,6 +1,6 @@
 {
   "name": "purescript-monad-fix",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "moduleType": [
     "node"
   ],
@@ -13,5 +13,9 @@
   "dependencies": {
     "purescript-transformers": "^0.8.4",
     "purescript-eff": "^0.1.2"
+  },
+  "devDependencies": {
+    "purescript-console": "^0.1.0",
+    "purescript-assert": "^0.1.0"
   }
 }
