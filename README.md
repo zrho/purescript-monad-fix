@@ -6,7 +6,7 @@ purescript-monad-fix
 `MonadFix` type class that allows computations to depend on their own result,
 hidden under a lambda.
 
-- [Module documentation](docs/Text/Parsing/)
+- [Module documentation](docs/Control/Monad/Fix.md)
 - [Example usage](test/Main.purs)
 
 ### Installing
