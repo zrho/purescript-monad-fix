@@ -2,8 +2,8 @@ module Control.Monad.Fix where
 
 import Prelude
 
-import Data.Identity (Identity (..), runIdentity)
-import Data.Monoid (Monoid)
+import Data.Identity (Identity (..))
+import Data.Monoid (class Monoid)
 import Data.Tuple (fst)
 import Control.Monad.Eff (Eff ())
 import Control.Monad.RWS.Trans (RWST (..), RWSResult (..), runRWST)
@@ -25,8 +25,12 @@ class (Monad m) <= MonadFix m where
 instance monadFixRWST :: (Monoid w, MonadFix m) => MonadFix (RWST r w s m) where
   mfix f = RWST \r s -> mfix \t -> runRWST (f \u -> case t u of RWSResult _ a _ -> a) r s
 
+-- Pulled in from an old version of purescript-identity
+runIdentity :: forall a. Identity a -> a
+runIdentity (Identity x) = x
+
 instance monadFixIdentity :: MonadFix Identity where
-  mfix = Identity <<< fixPure <<< (runIdentity <<<)
+  mfix = Identity <<< fixPure <<< (\x -> runIdentity <<< x)
 
 instance monadFixEff :: MonadFix (Eff eff) where
   mfix = fixEffect
@@ -38,7 +42,7 @@ instance monadFixReaderT :: (MonadFix m) => MonadFix (ReaderT r m) where
   mfix f = ReaderT \r -> mfix (flip runReaderT r <<< f)
 
 instance monadFixStateT :: (MonadFix m) => MonadFix (StateT s m) where
-  mfix f = StateT \s -> mfix (flip runStateT s <<< f <<< (fst <<<))
+  mfix f = StateT \s -> mfix (flip runStateT s <<< f <<< (\x -> fst <<< x))
 
 instance monadFixWriterT :: (MonadFix m, Monoid w) => MonadFix (WriterT w m) where
-  mfix f = WriterT $ mfix (runWriterT <<< f <<< (fst <<<))
+  mfix f = WriterT $ mfix (runWriterT <<< f <<< (\x -> fst <<< x))
