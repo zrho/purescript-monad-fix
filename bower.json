@@ -11,11 +11,11 @@
     "output"
   ],
   "dependencies": {
-    "purescript-transformers": "^0.8.4",
-    "purescript-eff": "^0.1.2"
+    "purescript-transformers": "^3.4.0",
+    "purescript-eff": "^3.1.0"
   },
   "devDependencies": {
-    "purescript-console": "^0.1.0",
-    "purescript-assert": "^0.1.0"
+    "purescript-console": "^3.0.0",
+    "purescript-assert": "^3.0.0"
   }
 }
